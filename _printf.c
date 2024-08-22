@@ -20,7 +20,11 @@ int _printf(const char *format, ...)
 		{
 			ptr++;
 			if (*ptr == '\0')
+			{
+				write(1, "%", 1);
+				count++;
 				break;
+			}
 			count += handle_specifier(*ptr, args);
 		}
 		else
