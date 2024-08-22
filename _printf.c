@@ -3,35 +3,37 @@
 #include <unistd.h>
 
 /**
- * _printf - produces output according to a format
- * @format: character string containing format specifiers
+ * _printf - Custom printf function.
+ * @format: The format string.
+ * @...: The values to format and print.
  *
- * Return: number of characters printed
+ * Return: The number of characters printed.
  */
 int _printf(const char *format, ...)
 {
-	int printed_chars = 0;
+	int count = 0;
 	va_list args;
+	const char *p = format;
 
 	va_start(args, format);
-	if (!format)
-		return (-1);
 
-	while (*format)
+	while (*p)
 	{
-		if (*format == '%')
+		if (*p == '%')
 		{
-			format++;
-			printed_chars += handle_specifier(format, args);
+			p++;
+			if (*p)
+			{
+				count += handle_specifier(*p, args);
+			}
 		}
 		else
 		{
-			write(1, format, 1);
-			printed_chars++;
+			count += write(1, p, 1);
 		}
-		format++;
+		p++;
 	}
 
 	va_end(args);
-	return (printed_chars);
+	return count;
 }
