@@ -1,8 +1,7 @@
 #include "main.h"
-#include <unistd.h>
 
 /**
- * print_number - Prints an integer as a string.
+ * print_number - Prints an integer.
  * @num: The integer to print.
  *
  * Return: The number of characters printed.
@@ -10,29 +9,21 @@
 int print_number(int num)
 {
 	int count = 0;
-	int temp;
-	int divisor = 1;
 	char digit;
 
 	if (num < 0)
 	{
+		write(1, "-", 1);
+		count++;
 		num = -num;
-		count += write(1, "-", 1);
 	}
 
-	temp = num;
-	while (temp / 10 > 0)
-	{
-		temp /= 10;
-		divisor *= 10;
-	}
+	if (num / 10 != 0)
+		count += print_number(num / 10);
 
-	while (divisor > 0)
-	{
-		digit = (num / divisor % 10) + '0';
-		count += write(1, &digit, 1);
-		divisor /= 10;
-	}
+	digit = (num % 10) + '0';
+	write(1, &digit, 1);
+	count++;
 
 	return count;
 }

@@ -1,0 +1,86 @@
+.TH PRINTF 3 "August 2024" "1.0" "Library Functions Manual"
+.SH NAME
+_printf \- formatted output conversion
+.SH SYNOPSIS
+.B int _printf(const char *format, ...);
+.SH DESCRIPTION
+The \fB_printf\fR function produces output according to a format. The format string is composed of zero or more directives, which are normally printed as-is. Directives contain optional flags, width, precision, and length specifications, followed by a conversion specifier that indicates the type of data to be printed. 
+
+The \fB_printf\fR function understands the following conversion specifiers:
+
+.TP
+.B %c
+Prints a single character.
+
+.TP
+.B %s
+Prints a string.
+
+.TP
+.B %%
+Prints a literal percent sign.
+
+.TP
+.B %d
+Prints a signed decimal integer.
+
+.TP
+.B %i
+Prints a signed decimal integer (same as %d).
+
+.TP
+.B %u
+Prints an unsigned decimal integer.
+
+.TP
+.B %o
+Prints an unsigned octal number.
+
+.TP
+.B %x
+Prints an unsigned hexadecimal number (lowercase letters).
+
+.TP
+.B %X
+Prints an unsigned hexadecimal number (uppercase letters).
+
+.TP
+.B %p
+Prints a pointer address.
+
+.SH RETURN VALUE
+On success, \fB_printf\fR returns the number of characters printed (excluding the null byte used to end output to strings). If an error occurs, \fB_printf\fR returns \-1 and sets \fBerrno\fR appropriately.
+
+.SH EXAMPLES
+.PP
+The following example demonstrates the usage of \fB_printf\fR:
+
+.nf
+#include "main.h"
+
+int main(void)
+{
+    int len;
+    int len2;
+
+    len = _printf("Let's try to print a simple sentence.\n");
+    len2 = printf("Let's try to print a simple sentence.\n");
+    _printf("Length: [%d]\n", len);
+    printf("Length: [%d]\n", len2);
+    _printf("Character: [%c]\n", 'A');
+    _printf("String: [%s]\n", "Hello, world!");
+    _printf("Percent sign: [%%]\n");
+    _printf("Integer: [%d]\n", 12345);
+    _printf("Hexadecimal: [%x]\n", 255);
+    return 0;
+}
+.fi
+
+.SH NOTES
+The \fB_printf\fR function does not handle flags, width, precision, or length modifiers. It only processes the basic conversion specifiers mentioned above.
+
+.SH BUGS
+No known bugs.
+
+.SH SEE ALSO
+.BR printf (3)

@@ -1,39 +1,41 @@
 #include "main.h"
-#include <unistd.h>
 
 /**
- * handle_specifier - Handles a format specifier in _printf.
- * @specifier: The format specifier character (e.g., 'c', 's', 'd', etc.).
- * @args: The list of arguments passed to _printf.
+ * handle_specifier - Handles format specifiers.
+ * @specifier: The format specifier.
+ * @args: The argument list.
  *
  * Return: The number of characters printed.
  */
 int handle_specifier(char specifier, va_list args)
 {
 	int count = 0;
+	char c;
+	char *str;
 
-	if (specifier == 'c')
+	switch (specifier)
 	{
-		char c = va_arg(args, int);
-		count += write(1, &c, 1);
+		case 'c':
+			c = (char)va_arg(args, int);
+			write(1, &c, 1);
+			count++;
+			break;
+		case 's':
+			str = va_arg(args, char *);
+			if (str == NULL)
+				str = "(null)";
+			count += _strlen(str);
+			write(1, str, _strlen(str));
+			break;
+		case '%':
+			write(1, "%", 1);
+			count++;
+			break;
+		default:
+			write(1, "%", 1);
+			write(1, &specifier, 1);
+			count += 2;
+			break;
 	}
-	else if (specifier == 's')
-	{
-		char *str = va_arg(args, char *);
-		if (str == NULL)
-		{
-			count += write(1, "(null)", 6);
-		}
-		else
-		{
-			count += write(1, str, _strlen(str));
-		}
-	}
-	else if (specifier == 'd' || specifier == 'i')
-	{
-		int num = va_arg(args, int);
-		count += print_number(num);
-	}
-
 	return count;
 }

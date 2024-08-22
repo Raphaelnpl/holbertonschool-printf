@@ -1,11 +1,8 @@
 #include "main.h"
-#include <stdarg.h>
-#include <unistd.h>
 
 /**
- * _printf - Custom printf function.
+ * _printf - Custom implementation of printf function.
  * @format: The format string.
- * @...: The arguments to format.
  *
  * Return: The number of characters printed.
  */
@@ -13,38 +10,25 @@ int _printf(const char *format, ...)
 {
 	va_list args;
 	int printed_chars = 0;
-	const char *ptr = format;
+	const char *ptr;
+
+	if (format == NULL)
+		return (-1);
 
 	va_start(args, format);
-
-	while (*ptr)
+	for (ptr = format; *ptr; ptr++)
 	{
-		if (*ptr == '%')
+		if (*ptr == '%' && (*(ptr + 1) != '\0'))
 		{
 			ptr++;
-			if (*ptr == '\0')
-			{
-				break;
-			}
-			if (*ptr == '%')
-			{
-				write(1, "%", 1);
-				printed_chars++;
-			}
-			else
-			{
-				printed_chars += write(1, "%", 1);
-				printed_chars += write(1, ptr, 1);
-			}
+			printed_chars += handle_specifier(*ptr, args);
 		}
 		else
 		{
 			write(1, ptr, 1);
 			printed_chars++;
 		}
-		ptr++;
 	}
-
 	va_end(args);
-	return printed_chars;
+	return (printed_chars);
 }
