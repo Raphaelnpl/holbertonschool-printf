@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * _printf - Custom implementation of printf function.
+ * _printf - A simplified version of printf.
  * @format: The format string.
  *
  * Return: The number of characters printed.
@@ -9,26 +9,27 @@
 int _printf(const char *format, ...)
 {
 	va_list args;
-	int printed_chars = 0;
+	int count = 0;
 	const char *ptr;
 
-	if (format == NULL)
-		return (-1);
-
 	va_start(args, format);
-	for (ptr = format; *ptr; ptr++)
+
+	for (ptr = format; *ptr != '\0'; ptr++)
 	{
-		if (*ptr == '%' && (*(ptr + 1) != '\0'))
+		if (*ptr == '%')
 		{
 			ptr++;
-			printed_chars += handle_specifier(*ptr, args);
+			if (*ptr == '\0')
+				break;
+			count += handle_specifier(*ptr, args);
 		}
 		else
 		{
 			write(1, ptr, 1);
-			printed_chars++;
+			count++;
 		}
 	}
+
 	va_end(args);
-	return (printed_chars);
+	return count;
 }
