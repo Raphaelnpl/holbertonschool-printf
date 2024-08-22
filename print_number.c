@@ -1,12 +1,12 @@
 #include "main.h"
 #include <unistd.h>
+
 /**
  * print_number - Prints an integer number.
  * @n: The integer number to be printed.
  *
  * Return: The number of characters printed.
  */
-
 int print_number(int n)
 {
 	int count = 0;

@@ -1,4 +1,6 @@
 #include "main.h"
+#include <unistd.h>
+
 /**
  * handle_specifier - Handles a format specifier in _printf.
  * @specifier: The format specifier character (e.g., 'c', 's', 'd', etc.).
@@ -6,7 +8,6 @@
  *
  * Return: The number of characters printed.
  */
-
 int handle_specifier(char specifier, va_list args)
 {
 	int count = 0;
@@ -19,7 +20,14 @@ int handle_specifier(char specifier, va_list args)
 	else if (specifier == 's')
 	{
 		char *str = va_arg(args, char *);
-		count += write(1, str, _strlen(str));
+		if (str == NULL)
+		{
+			count += write(1, "(null)", 6);
+		}
+		else
+		{
+			count += write(1, str, _strlen(str));
+		}
 	}
 	else if (specifier == 'd' || specifier == 'i')
 	{
