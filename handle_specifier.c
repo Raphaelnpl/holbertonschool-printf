@@ -31,11 +31,15 @@ int handle_specifier(char specifier, va_list args)
 			write(1, "%", 1);
 			count++;
 			break;
+		case 'd':
+		case 'i':
+			count += print_number(va_arg(args, int));
+			break;
 		default:
 			write(1, "%", 1);
 			write(1, &specifier, 1);
 			count += 2;
 			break;
 	}
-	return (count);
+	return count;
 }

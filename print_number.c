@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * print_number - Prints an integer.
+ * print_number - Prints an integer to stdout.
  * @num: The integer to print.
  *
  * Return: The number of characters printed.
@@ -9,7 +9,8 @@
 int print_number(int num)
 {
 	int count = 0;
-	char digit;
+	int divisor = 1;
+	int temp;
 
 	if (num < 0)
 	{
@@ -18,12 +19,17 @@ int print_number(int num)
 		num = -num;
 	}
 
-	if (num / 10 != 0)
-		count += print_number(num / 10);
+	temp = num;
+	while (temp / divisor >= 10)
+		divisor *= 10;
 
-	digit = (num % 10) + '0';
-	write(1, &digit, 1);
-	count++;
+	while (divisor > 0)
+	{
+		char digit = (num / divisor % 10) + '0';
+		write(1, &digit, 1);
+		count++;
+		divisor /= 10;
+	}
 
-	return (count);
+	return count;
 }
