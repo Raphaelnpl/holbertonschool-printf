@@ -28,7 +28,10 @@ int _printf(const char *format, ...)
 				count++;
 				break;
 			}
-			count += handle_specifier(*ptr, args);
+			else
+			{
+				count += handle_specifier(*ptr, args);
+			}
 		}
 		else
 		{
