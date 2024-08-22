@@ -25,5 +25,5 @@ int print_number(int num)
 	write(1, &digit, 1);
 	count++;
 
-	return count;
+	return (count);
 }

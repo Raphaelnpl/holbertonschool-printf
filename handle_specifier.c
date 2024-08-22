@@ -37,5 +37,5 @@ int handle_specifier(char specifier, va_list args)
 			count += 2;
 			break;
 	}
-	return count;
+	return (count);
 }
