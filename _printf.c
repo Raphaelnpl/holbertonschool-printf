@@ -21,17 +21,10 @@ int _printf(const char *format, ...)
 	{
 		if (*ptr == '%')
 		{
+			if (*(ptr + 1) == '\0')
+				return (-1);
 			ptr++;
-			if (*ptr == '\0')
-			{
-				write(1, "%", 1);
-				count++;
-				break;
-			}
-			else
-			{
-				count += handle_specifier(*ptr, args);
-			}
+			count += handle_specifier(*ptr, args);
 		}
 		else
 		{
