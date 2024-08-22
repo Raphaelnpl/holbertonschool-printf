@@ -19,10 +19,23 @@ int _printf(const char *format, ...)
 
 	while (*ptr)
 	{
-		if (*ptr == '%' && *(ptr + 1))
+		if (*ptr == '%')
 		{
 			ptr++;
-			printed_chars += handle_specifier(*ptr, args);
+			if (*ptr == '\0')
+			{
+				break;
+			}
+			if (*ptr == '%')
+			{
+				write(1, "%", 1);
+				printed_chars++;
+			}
+			else
+			{
+				printed_chars += write(1, "%", 1);
+				printed_chars += write(1, ptr, 1);
+			}
 		}
 		else
 		{

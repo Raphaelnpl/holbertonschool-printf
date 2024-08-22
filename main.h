@@ -7,6 +7,6 @@
 int _printf(const char *format, ...);
 int handle_specifier(char specifier, va_list args);
 int print_number(int n);
-int _strlen(char *s);
+int _strlen(const char *s);
 
 #endif /* MAIN_H */
