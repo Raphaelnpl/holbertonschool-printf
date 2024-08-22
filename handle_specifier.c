@@ -34,6 +34,10 @@ int handle_specifier(char specifier, va_list args)
 		int num = va_arg(args, int);
 		count += print_number(num);
 	}
+	else if (specifier == '%')
+	{
+		count += write(1, "%", 1);
+	}
 
 	return count;
 }

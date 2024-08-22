@@ -5,35 +5,33 @@
 /**
  * _printf - Custom printf function.
  * @format: The format string.
- * @...: The values to format and print.
+ * @...: The arguments to format.
  *
  * Return: The number of characters printed.
  */
 int _printf(const char *format, ...)
 {
-	int count = 0;
 	va_list args;
-	const char *p = format;
+	int printed_chars = 0;
+	const char *ptr = format;
 
 	va_start(args, format);
 
-	while (*p)
+	while (*ptr)
 	{
-		if (*p == '%')
+		if (*ptr == '%' && *(ptr + 1))
 		{
-			p++;
-			if (*p)
-			{
-				count += handle_specifier(*p, args);
-			}
+			ptr++;
+			printed_chars += handle_specifier(*ptr, args);
 		}
 		else
 		{
-			count += write(1, p, 1);
+			write(1, ptr, 1);
+			printed_chars++;
 		}
-		p++;
+		ptr++;
 	}
 
 	va_end(args);
-	return count;
+	return printed_chars;
 }
