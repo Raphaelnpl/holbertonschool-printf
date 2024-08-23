@@ -2,34 +2,34 @@
 
 /**
  * print_number - Prints an integer to stdout.
- * @num: The integer to print.
+ * @n: The integer to print.
  *
  * Return: The number of characters printed.
  */
-int print_number(int num)
+int print_number(int n)
 {
+	unsigned int num;
 	int count = 0;
-	int divisor = 1;
-	int temp;
+	char digit;
 
-	if (num < 0)
+	if (n < 0)
 	{
 		write(1, "-", 1);
 		count++;
-		num = -num;
+		num = (unsigned int)(-n);
 	}
-
-	temp = num;
-	while (temp / divisor >= 10)
-		divisor *= 10;
-
-	while (divisor > 0)
+	else
 	{
-		char digit = (num / divisor % 10) + '0';
-		write(1, &digit, 1);
-		count++;
-		divisor /= 10;
+		num = (unsigned int)n;
 	}
+
+	if (num / 10)
+		count += print_number(num / 10);
+
+	digit = (num % 10) + '0';
+	write(1, &digit, 1);
+	count++;
 
 	return count;
 }
+
