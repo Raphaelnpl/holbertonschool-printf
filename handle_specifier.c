@@ -12,6 +12,10 @@ int handle_specifier(char specifier, va_list args)
 	int count = 0;
 	char c;
 	char *str;
+	int num;
+	char buffer[12];
+	int len;
+	int temp;
 
 	switch (specifier)
 	{
@@ -33,7 +37,24 @@ int handle_specifier(char specifier, va_list args)
 			break;
 		case 'd':
 		case 'i':
-			count += print_number(va_arg(args, int));
+			num = va_arg(args, int);
+			if (num < 0)
+			{
+				write(1, "-", 1);
+				count++;
+				num = -num;
+			}
+			len = 0;
+			temp = num;
+			do {
+				buffer[len++] = (temp % 10) + '0';
+				temp /= 10;
+			} while (temp > 0);
+
+			while (len > 0)
+				write(1, &buffer[--len], 1);
+
+			count += len;
 			break;
 		default:
 			write(1, "%", 1);
